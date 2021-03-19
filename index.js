@@ -15,7 +15,9 @@ const client = new Discord.Client()
 const prefix = '-';
 registerFont('./Texturina-BlackItalic-opsz=12.ttf', { family: 'Texturina' })
  
-const trevor = "733530045355655250"
+const trevor = "733530045355655250";
+const nandana = "762269923262857226"
+
 
 
 
@@ -43,10 +45,9 @@ client.on("ready", () =>{
 
 client.on('message', async receivedMessage => {
     // Prevent bot from responding to its own messages
-    client.user.setActivity("Genius Minds Work.", {type: "WATCHING"})
+    client.user.setActivity("Under Maintenance.")
     if(!receivedMessage.content.startsWith(prefix) && !receivedMessage.author.bot){
-      client.commands.get('ranking').execute(receivedMessage, db, fs);
-      client.commands.get('language').execute(receivedMessage);
+      client.commands.get('lingual').execute(receivedMessage, db, fs);
     }
     if(!receivedMessage.guild && !receivedMessage.author.bot){
       if(receivedMessage.author == trevor){
@@ -55,7 +56,16 @@ client.on('message', async receivedMessage => {
         receivedMessage.author.send("Sent to: " + sms.toString())
         
         return client.users.fetch(sms).then(user => {user.send(result)});
+
+      }else if(receivedMessage.author == nandana){
+        var sms = sentFromT(receivedMessage);
+        var result = receivedMessage.content.substr(receivedMessage.content.indexOf(" ") + 1);
+        if(sms == "mystery"){
+          receivedMessage.author.send("Sent to: #murder_mystery. The tale continues")
+        }
+        return client.channels.cache.get("803175779533586443").send(result);
       }
+
       var msg = receivedMessage.author.toString() + ", says: " + receivedMessage.toString();
       return client.users.fetch(trevor).then(user => {
       user.send(msg)

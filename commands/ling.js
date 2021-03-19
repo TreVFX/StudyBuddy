@@ -1,10 +1,30 @@
 module.exports = {
-    name: 'language',
-    description: "this is a language moderation command!",
-    execute(message){
-      language_mod(message);
-      
+    name: 'lingual',
+    description: "This is a language control module!",
+    execute(message, db, fs){
+      language_mod(message)
+      rank_sys(message, db, fs);
+        
     }
+}
+
+function rank_sys(message, db, fs){
+  if (!db[message.author.id]) db[message.author.id] = {
+        xp: 0,
+        level: 0
+      };
+  let upgrade = [7, 10, 14];
+  let picker = upgrade[Math.floor(Math.random() * upgrade.length)];
+  db[message.author.id].xp += 4;
+  let userInfo = db[message.author.id];
+  if(userInfo.xp > 100) {
+      userInfo.level++
+      userInfo.xp = 0
+      message.reply("Congratulations, you level up")
+  fs.writeFile("./database.json", JSON.stringify(db), (x) => {
+    if (x) console.error(x)
+  });
+  }
 }
 
 var words;
@@ -28,4 +48,3 @@ function language_mod(message){
 bad_words = ['arse', 'ass', 'asshole', 'bastard', 'bitch', 'bollocks', 'brotherfucker', 'bugger', 'bullshit', 'child-fucker', 'crap', 'cunt', 'damn', 'effing', 'fatherfucker', 'frigger', 'fuck', 'goddamn', 'godsdamn', 'horseshit', 'motherfucker', 'nigga', 'nigger', 'prick', 'shit', 'shitass', 'sisterfucker', 'slut', 'whore', 'twat', 'wtf', 'badword'
 ];
 responses_gif = ["https://tenor.com/view/captain-america-marvel-avengers-gif-14328153", "https://tenor.com/view/marvel-tony-stark-iron-man-gif-18079972", "https://tenor.com/view/funny-or-die-will-ferrell-watch-your-mouth-filthy-mouth-mouth-gif-4427315", "https://tenor.com/view/language-please-nora-walker-brenda-strong-13reasons-why-watch-your-language-gif-17599983", "https://tenor.com/view/your-language-is-offensive-watch-your-mouth-zach-galifianakis-gif-13885320", "https://tenor.com/view/adminadmin-hesaida-badword-gif-18787905", "https://tenor.com/view/pardon-excuse-me-what-gif-15268221", "https://tenor.com/view/clapping-leonardo-dicaprio-leo-dicaprio-well-done-applause-gif-16463566", "https://tenor.com/view/schitts-creek-will-not-be-tolerated-talking-gif-15501711", "https://tenor.com/view/watch-your-language-words-talk-dont-be-harsh-derek-luke-gif-15626011"];
-
