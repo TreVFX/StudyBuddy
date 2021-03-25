@@ -10,7 +10,7 @@ module.exports = {
 async function f1(message, args) {
    if (message.member.voice.channel) {
         const connection = await message.member.voice.channel.join();
-        const ytdl = require('ytdl-core');
+        
         if(args.length > 0){
           console.log("I'm singing your song")
           song = args.toString()
