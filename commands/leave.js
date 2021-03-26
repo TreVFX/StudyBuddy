@@ -1,7 +1,7 @@
 module.exports = {
   name: "leave",
   description: "Exit",
-  async execute(message, args){
+  async execute(message, param){
     const voiceChannel = message.member.voice.channel;
 
     if(!voiceChannel) return message.reply("You need to be in a voice channel to execute that command");

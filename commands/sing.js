@@ -1,8 +1,8 @@
 module.exports = {
     name: 'sing',
     description: "this is a sing command!",
-    execute(message, args){
-      f1(message, args);
+    execute(message, param){
+      f1(message, param[0]);
       
     }
 }

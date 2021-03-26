@@ -1,7 +1,7 @@
 module.exports = {
     name: 'quote',
     description: "this is a  quote command!",
-    execute(message, args){
+    execute(message){
         mess = quotes[Math.floor(Math.random() * quotes.length)]; 
         message.channel.send(mess)
     }

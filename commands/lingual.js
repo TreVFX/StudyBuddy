@@ -1,7 +1,11 @@
 module.exports = {
     name: 'lingual',
     description: "This is a language control module!",
-    execute(message, db, fs){
+    execute(message, param){
+
+      let db = param[2];
+      let fs = param[3];
+
       language_mod(message)
       rank_sys(message, db, fs);
         

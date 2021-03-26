@@ -4,7 +4,9 @@ const ytSearch = require("yt-search");
 module.exports = {
   name: "play",
   description: "Playing",
-  async execute(message, args){
+  async execute(message, param){
+    let args = param[0];
+    
     const voiceChannel = message.member.voice.channel;
     if(!voiceChannel) return message.channel.send("Please enter a voice channel");
     if(!args[0]) return message.channel.send("Please enter a song");
@@ -48,8 +50,12 @@ module.exports = {
       .on('finish', () =>{
         voiceChannel.leave();
       });
+      ytdl.getInfo(video.url, function(err, info) {
+        console.log(info.thumbnail_url) // "Adele - Hello" thumbail
+      });
 
       await message.reply(`:thumbsup: Now Playing ***${video.title}***`)
+      
 
     }else{
       message.channel.send("No results found")

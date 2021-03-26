@@ -1,7 +1,11 @@
 module.exports = {
   name: "poll",
   description: "This is a polling system",
-  execute(message, args, Discord){
+  execute(message, param){
+
+    let args = param[0];
+    let Discord = param[1]
+
     let embed = new Discord.MessageEmbed()
     .setColor(0x4286f4)
     .setTitle("Vote")

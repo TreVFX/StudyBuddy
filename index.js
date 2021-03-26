@@ -14,7 +14,7 @@ const client = new Discord.Client()
 
 
 
-const prefix = '-';
+const { prefix } = require('./config.json');
 registerFont('./myfonts/Texturina-BlackItalic-opsz=12.ttf', { family: 'Texturina' })
  
 
@@ -40,6 +40,13 @@ client.once('ready', () => {
 })
 
 client.on('message', async message => {
+
+  const args = message.content.slice(prefix.length).split(/ +/);
+  
+  const command = args.shift().toLowerCase();
+
+  let param = [args, Discord, db, fs, client]
+
   if(!message.guild){
     client.commands.get("dm").execute(message, client);
   }
@@ -47,42 +54,22 @@ client.on('message', async message => {
     message.reply("My Prefix is ***-***")
   }
   if(!message.content.startsWith(prefix)){
-    client.commands.get("lingual").execute(message, db, fs);
+    client.commands.get("lingual").execute(message, param);
   };
 
   if(!message.content.startsWith(prefix) || message.author.bot) return;
 
-  const args = message.content.slice(prefix.length).split(/ +/);
-  
-  const command = args.shift().toLowerCase();
 
-  switch(command){
-    case "command":
-      client.commands.get("command").execute(message, args, Discord);
-      break;
-    case "rank":
-      client.commands.get("myrank").execute(message, db, Discord);
-      break;
-    case "ping":
-      client.commands.get("ping").execute(message);
-      break;
-    case "help":
-      client.commands.get("help").execute(message, Discord);
-      break;
-    case "poll":
-      console.log(args);
-      client.commands.get("poll").execute(message, args, Discord);
-      break;
-    case "play":
-      client.commands.get("play").execute(message, args);
-      break;
-    case "leave":
-      client.commands.get("leave").execute(message, args);
-      break;
-      
-  }
+
+  try {
+	client.commands.get(command).execute(message, param);
+} catch (error) {
+  console.log(error)
+	message.reply('there was an error trying to execute that command!');
+}
   
 })
+
 
 client.login(process.env.DISCORD_TOKEN) // Replace XXXXX with your bot token
 console.log("Bot is online.")

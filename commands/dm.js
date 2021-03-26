@@ -1,8 +1,9 @@
 module.exports = {
   name: "dm",
   description: "Controls what happens in the dms",
-  execute(message, client){
+  execute(message, param){
 
+    let client = param[4]
 
     const dmMsg = message.content.split(/ +/);
     const dmCom = dmMsg.shift();
