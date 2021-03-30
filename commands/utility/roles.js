@@ -11,6 +11,8 @@ module.exports = {
     let title;
     let desc;
     let fields = [];
+    let rols = [];
+    let emj = [];
 
 
     for(const statement of interm_cmd){
@@ -29,21 +31,20 @@ module.exports = {
           break;
         case "emoji":
           let tmp = detail.split(" ");
+          if(tmp[tmp.length-1] == ""){
+            tmp.pop();
+          }
           let emoji = tmp.shift();
           tmp = tmp.join(" ");
           fields.push({name: tmp, value: emoji});
-          console.log(tmp);
 
       }
     }
 
-
-    
-    const yellowTeamRole = message.guild.roles.cache.find(role => role.name === "Yellow");
-    const blueTeamRole = message.guild.roles.cache.find(role => role.name === "Blue");
-
-    const yellowEmoji = "🧡";
-    const blueEmoji = "💙";
+    for(let rol of fields){
+      emj.push(rol.value);
+    }
+    console.log(rols)
 
     let embed = new Discord.MessageEmbed()
     .setColor("#e42643")
@@ -54,24 +55,24 @@ module.exports = {
     );
 
     let messageEmbed = await message.channel.send(embed);
-    messageEmbed.react(yellowEmoji);
-    messageEmbed.react(blueEmoji);
+    for(const e of emj){
+      messageEmbed.react(e);
+    }
 
     client.on('messageReactionAdd', async (reaction, user) => {
       if (reaction.message.partial) await reaction.message.fetch();
       if (reaction.partial) await reaction.fetch();
       if (user.bot) return;
       if (!reaction.message.guild) return;
-      if (reaction.emoji.name === '🧡') {
-        await reaction.message.guild.members.cache
-        .get(user.id)
-        .roles.add(yellowTeamRole);
-  }
-      if (reaction.emoji.name === '💙') {
-        await reaction.message.guild.members.cache
-        .get(user.id)
-        .roles.add(blueTeamRole);
+      for(const re of fields){
+        if(reaction.emoji.name === re.value){
+          let rname = message.guild.roles.cache.find(role => role.name == re.name);
+          await reaction.message.guild.members.cache
+          .get(user.id)
+          .roles.add(rname);
+        }
       }
+      
 
     });
 
@@ -80,15 +81,13 @@ module.exports = {
       if (reaction.partial) await reaction.fetch();
       if (user.bot) return;
       if (!reaction.message.guild) return;
-      if (reaction.emoji.name === '🧡') {
-        await reaction.message.guild.members.cache
-        .get(user.id)
-        .roles.remove(yellowTeamRole);
-      }
-      if (reaction.emoji.name === '💙') {
-        await reaction.message.guild.members.cache
-        .get(user.id)
-        .roles.remove(blueTeamRole);
+      for(const re of fields){
+        if(reaction.emoji.name === re.value){
+          let rname = message.guild.roles.cache.find(role => role.name == re.name);
+          await reaction.message.guild.members.cache
+          .get(user.id)
+          .roles.remove(rname);
+        }
       }
     });
 
