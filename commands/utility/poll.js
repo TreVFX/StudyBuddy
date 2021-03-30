@@ -1,5 +1,6 @@
 module.exports = {
   name: "poll",
+  aliases: ["vote"],
   description: "This is a polling system",
   execute(message, param){
 

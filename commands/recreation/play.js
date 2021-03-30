@@ -3,6 +3,7 @@ const ytSearch = require("yt-search");
 
 module.exports = {
   name: "play",
+  aliases: ["sing"],
   description: "Playing",
   async execute(message, param){
     let args = param[0];

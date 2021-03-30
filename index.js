@@ -10,7 +10,9 @@ app.listen(port, () => console.log(`Example app listening at http://localhost:${
 const Discord = require('discord.js')
 const Canvas = require('canvas');
 const { registerFont } = require('canvas');
-const client = new Discord.Client()
+const client = new Discord.Client({
+  partials: ['MESSAGE', 'REACTION', 'CHANNEL']
+})
 
 
 
@@ -22,12 +24,16 @@ const fs = require('fs');
 let db = JSON.parse(fs.readFileSync("./database.json", "utf8"));
  
 client.commands = new Discord.Collection();
- 
-const commandFiles = fs.readdirSync('./commands/').filter(file => file.endsWith('.js'));
-for(const file of commandFiles){
-    const command = require(`./commands/${file}`);
- 
-    client.commands.set(command.name, command);
+
+const commandFolders = fs.readdirSync('./commands');
+
+for(const folder of commandFolders){ 
+  const commandFiles = fs.readdirSync(`./commands/${folder}`).filter(file => file.endsWith('.js'));
+  for(const file of commandFiles){
+      const command = require(`./commands/${folder}/${file}`);
+  
+      client.commands.set(command.name, command);
+  }
 }
 
 
@@ -43,9 +49,11 @@ client.on('message', async message => {
 
   const args = message.content.slice(prefix.length).split(/ +/);
   
-  const command = args.shift().toLowerCase();
+  const commandName = args.shift().toLowerCase();
 
   let param = [args, Discord, db, fs, client]
+
+  if(message.author.bot) return;
 
   if(!message.guild){
     client.commands.get("dm").execute(message, client);
@@ -57,16 +65,19 @@ client.on('message', async message => {
     client.commands.get("lingual").execute(message, param);
   };
 
-  if(!message.content.startsWith(prefix) || message.author.bot) return;
+  if(!message.content.startsWith(prefix)) return;
 
 
+  const command = client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
+
+  if(!command) return;
 
   try {
-	client.commands.get(command).execute(message, param);
-} catch (error) {
-  console.log(error)
-	message.reply('there was an error trying to execute that command!');
-}
+	command.execute(message, param);
+  } catch (error) {
+    console.log(error)
+    message.reply('there was an error trying to execute that command!');
+  }
   
 })
 
