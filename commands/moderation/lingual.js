@@ -41,8 +41,8 @@ function language_mod(message){
     for(var i=0; i < words.length; i++){
       if(words[i] == bad_words[j]){
         idx = Math.floor(Math.random() * responses_gif.length)
-        message.channel.send(responses_gif[idx]);
-        message.channel.send(responses[idx]);
+        message.author.send(responses_gif[idx]);
+        message.author.send(responses[idx]);
         return message.delete().then(msg => console.log(`Deleted message from ${msg.author.username} immediately`)).catch(console.error);
       }
     }

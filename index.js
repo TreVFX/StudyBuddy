@@ -41,7 +41,11 @@ const ytdl = require('ytdl-core');
 var servers = {};
 
 client.once('ready', () => {
-  client.user.setActivity("Brilliant minds at work", {type: "WATCHING"});
+  setInterval(function(){
+    let messages = ["Brilliant minds at work", "Lounge conversation", "Geniuses work"]
+    mess = messages[Math.floor(Math.random() * messages.length)];
+    client.user.setActivity(mess, {type: "WATCHING"})
+  }, 10000);
   console.log("Awaiting commands!")
 })
 
@@ -79,6 +83,10 @@ client.on('message', async message => {
     message.reply('there was an error trying to execute that command!');
   }
   
+})
+
+client.on("guildMemberUpdate", member =>{
+  let nitro = member.premiumSince
 })
 
 
