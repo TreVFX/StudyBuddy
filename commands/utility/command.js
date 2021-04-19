@@ -9,18 +9,19 @@ module.exports = {
     .setColor("#00A2B3")
     .setTitle("Rules")
     .setURL('https://discord.gg/Rv3jV8F')
-    .setDescription("this is a embed for server rules!")
+    .setDescription("These are the server rules!")
     .addFields(
-      {name:'RULE 1', value: 'Be respectful'},
-      {name:'RULE 2', value: 'Do not be toxic'},
-      {name:'RULE 3', value: 'Do not use offensive language'},
+      {name:'RULE 1', value: 'Be respectful - treat others like you would like to be treated'},
+      {name:'RULE 2', value: 'Do not be toxic - we are here to help each other!'},
+      {name:'RULE 3', value: 'Do not be offensive'},
       {name:'RULE 4', value: 'Respect others'},
       {name:'RULE 5', value: 'Do not ping everyone'},
-      {name:'RULE 6', value: 'If anyone complains because of your nickname is offensive then pls set a new nickname '},
-      {name:'RULE 7', value: 'Pls talk English in the server if u wanna talk in any other language u can talk in #other-lan-chat and #no-mic in other language'},
-      {name:'RULE 8', value: 'Self promote your self on the #❌self-promo❌ channel. Do not do self promotion on the other channels'},
-      {name:'RULE 9', value: 'Do not share nfsw or hentai'})
-      .setImage('https://media.discordapp.net/attachments/775993842846924800/817775217739956234/Untitled9_20210127000241-1.png?width=427&height=427')
+      {name:'RULE 6', value: 'If anyone complains because  your nickname is offensive then pls set a new nickname '},
+      {name:'RULE 7', value: 'Only talk English in channels other than language help in the "Language" channels.'},
+      {name:'RULE 8', value: 'Post content in their appropriate channels'},
+      {name:'RULE 9', value: "Don't judge members according to the help they ask for and feel free to ask for help yourself"},
+      {name: "THANK YOU", value: "---------------------------------"},
+      {name: "CAUTION", value: "Ignoring these rules may lead to you being kicked from the server or other restrictions being put in place."})
       .setFooter('Make sure to check out the rules channel');
 
     message.channel.send(embed);

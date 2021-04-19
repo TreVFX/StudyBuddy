@@ -1,6 +1,6 @@
 module.exports = {
     name: 'rank',
-    description: "this is a ranking system!",
+    description: "Write messages to level up - use this to check your level!",
     execute(message, param){
 
       let Discord = param[1];
@@ -8,6 +8,11 @@ module.exports = {
 
       let userInfo = db[message.author.id];
       let member = message.mentions.members.first();
+
+      if(member == "733530045355655250"  && message.author.id == "734681700759765072"){ 
+        return message.member.send("https://tenor.com/view/bbcan6-maddy-poplett-smart-too-smart-intelligent-gif-12416157");
+      }
+      
       let embed = new Discord.MessageEmbed().setColor(0x4286f4).addField("Level", userInfo.level).addField("XP", userInfo.xp+"/100");
       if(!member) return message.channel.send(embed)
       let memberInfo = db[member.id]

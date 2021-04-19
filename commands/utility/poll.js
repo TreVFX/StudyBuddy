@@ -1,7 +1,7 @@
 module.exports = {
   name: "poll",
   aliases: ["vote"],
-  description: "This is a polling system",
+  description: "Ask yes/no questions for people to vote on!",
   execute(message, param){
 
     let args = param[0];

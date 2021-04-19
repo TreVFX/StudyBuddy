@@ -55,6 +55,10 @@ client.on('message', async message => {
   
   const commandName = args.shift().toLowerCase();
 
+  if(commandName === "join"){
+    return client.emit("guildMemberAdd", message.member)
+  }
+
   let param = [args, Discord, db, fs, client]
 
   if(message.author.bot) return;
@@ -85,10 +89,16 @@ client.on('message', async message => {
   
 })
 
+
+
+client.on("guildMemberAdd", member =>{
+  client.commands.get("welcome").execute(member);
+})
+
 client.on("guildMemberUpdate", member =>{
   let nitro = member.premiumSince
 })
 
 
 client.login(process.env.DISCORD_TOKEN) // Replace XXXXX with your bot token
-console.log("Bot is online.")
+console.log("Buddy is online.")

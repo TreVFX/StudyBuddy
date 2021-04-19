@@ -4,7 +4,7 @@ const ytSearch = require("yt-search");
 module.exports = {
   name: "play",
   aliases: ["sing"],
-  description: "Playing",
+  description: "Play a song via a sound channel!",
   async execute(message, param){
     let args = param[0];
     
