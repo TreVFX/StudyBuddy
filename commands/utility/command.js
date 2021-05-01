@@ -1,6 +1,6 @@
 module.exports = {
   name: 'command',
-  description: "Embeds!",
+  description: "Gives you an overview of the key rules",
   execute(message, param) {
     
     let Discord = param[1];

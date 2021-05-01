@@ -1,7 +1,7 @@
 module.exports = {
   name: "poll",
   aliases: ["vote"],
-  description: "Ask yes/no questions for people to vote on!",
+  description: "Let's you create a simple yes or no vote",
   execute(message, param){
 
     let args = param[0];
@@ -109,6 +109,8 @@ module.exports = {
         .setFooter("Bot by Study Bunnies Founders | Poll by " + name);
         reaction.message.edit(editor);
       }
-      })
+      });
+
+
   }
-}
+} 

@@ -1,9 +1,23 @@
 module.exports = {
     name: 'help',
-    description: "this is a help command!",
+    description: "Displays this help message",
     execute(message, param){
+      let client = param[4];
+      let Discord = param[1];
+      let fs = param[3];
+      var descriptions = [];
 
-      let Discord = param[1]
+      const commandFolders = fs.readdirSync(`./commands`);
+      for(const cmd of client.commands){
+        if(cmd[1].category != "System"){
+          descriptions.push({name: `-${cmd[1].name}`, value: `${cmd[1].description}`})
+        }else{
+          continue;
+        }
+      }        
+        
+
+  
 
       let embed = new Discord.MessageEmbed()
       .setColor("#00A2B3")
@@ -11,14 +25,8 @@ module.exports = {
       .setURL('https://www.google.com')
       .setDescription("Here are my commands!")
       .addFields(
-        {name:'-help', value: 'Displays this help message'},
-        {name:'-ping', value: "Destroys you at ping-pong"},
-        {name:'-rank', value: 'Displays your current rank, which you can increase by writing messages - but no spamming!'},
-        {name:'-poll', value: "Let's you create a simple yes or no vote"},
-        {name: "-leave", value: "The bot will leave the sound channel you are in"},
-        {name: "-quote", value: "Gives you a random quote"},
-        {name: "-command", value: "Gives you an overview of the key rules"},
-        {name:'-play', value: 'Lets you play music. \n-play <name of song>\n Or\n-play <video URL>'})
+        descriptions
+        )
         .setImage("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSbITGb20Lq6Dng2T6SZmn6rSRQCJobHgmhig&usqp=CAU")
         .setFooter('Make sure to check out the rules channel');
 

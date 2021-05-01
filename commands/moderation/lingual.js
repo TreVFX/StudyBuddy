@@ -1,5 +1,6 @@
 module.exports = {
     name: 'lingual',
+    category: 'System',
     description: "This is a language control module!",
     execute(message, param){
 
