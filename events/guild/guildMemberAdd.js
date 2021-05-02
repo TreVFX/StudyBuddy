@@ -22,7 +22,9 @@ const applyText = (canvas, text) => {
 
 
 module.exports = async (Discord, client, member)=>{
-  const channel = member.guild.channels.cache.find(ch => ch.name === 'general');
+  const channel = member.guild.channels.cache.find(ch => ch.name === 'welcome');
+
+  if(!channel) return;
 
   // Creating the card area
   const canvas = Canvas.createCanvas(500, 125);
@@ -77,7 +79,8 @@ module.exports = async (Discord, client, member)=>{
 
   const attachment = new Discord.MessageAttachment(canvas.toBuffer());
 
-  channel.send(attachment)
+  //channel.send(attachment);
+  channel.send(`Welcome ${member}`)
 
   console.log("Some one joined!");
 }

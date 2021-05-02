@@ -74,6 +74,7 @@ module.exports = {
     }
     else if(cmd === 'skip') skip_song(message, server_queue);
     else if(cmd === 'stop' || cmd === 'leave') stop_song(message, server_queue);
+    
     }
     
 }
