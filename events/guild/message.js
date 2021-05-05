@@ -1,8 +1,7 @@
 const fs = require('fs');
 let db = JSON.parse(fs.readFileSync("./database.json", "utf8"));
-const prefix = "-"
 
-module.exports = (Discord, client, message)=>{
+module.exports = (Discord, client, prefix, message)=>{
   const args = message.content.slice(prefix.length).split(/ +/);
 
   const commandName = args.shift().toLowerCase();

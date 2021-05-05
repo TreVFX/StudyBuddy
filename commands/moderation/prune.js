@@ -9,7 +9,7 @@ module.exports = {
     }else if (number < 2 || number > 100) {
 	    return message.reply('You need to input a number between 2 and 100.');
     }
-    message.channel.bulkDelete(number, true).catch(err => {
+    message.channel.bulkDelete(number+1, true).catch(err => {
       console.error(err);
 	    message.channel.send('Sorry, a weird error occurred. Please try again later');
     });

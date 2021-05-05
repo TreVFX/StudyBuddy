@@ -5,7 +5,7 @@ const queue = new Map();
 
 module.exports = {
   name: "play",
-  aliases: ["skip", "loop", "stop", "leave"],
+  aliases: ["skip", "loop", "stop", "leave", "pause", "resume"],
   description: "Play a song via a sound channel!",
   async execute(message, param){
     let args = param[0];
@@ -74,7 +74,8 @@ module.exports = {
     }
     else if(cmd === 'skip') skip_song(message, server_queue);
     else if(cmd === 'stop' || cmd === 'leave') stop_song(message, server_queue);
-    
+    else if(cmd === 'pause') pause_song(message, server_queue);
+    else if(cmd === 'resume') resume_song(message, server_queue);
     }
     
 }
@@ -110,4 +111,16 @@ const stop_song = (message, server_queue) => {
     server_queue.songs = [];
     server_queue.connection.dispatcher.end();
     message.channel.send(`${message.author.username}, asked me to leave the channel :smiling_face_with_tear: .`)
+}
+
+const pause_song = (message, server_queue) => {
+    if (!message.member.voice.channel) return message.channel.send('Please join the VC');
+    server_queue.connection.dispatcher.pause();
+    message.channel.send("Song paused.")
+}
+
+const resume_song = (message, server_queue) => {
+    if (!message.member.voice.channel) return message.channel.send('Please join the VC');
+    server_queue.connection.dispatcher.resume();
+    message.channel.send(`Resuming the song`);
 }
