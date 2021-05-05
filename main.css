@@ -1,0 +1,21 @@
+.navs{
+  display: flex;
+  background-color: blue;
+}
+
+.navs .navlinks{
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+
+}
+
+.navs .navlinks .navlink{
+  padding: 1px;
+
+}
+
+.navs .navlinks .navlink a{
+  text-decoration: none;
+}
