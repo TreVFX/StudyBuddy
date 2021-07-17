@@ -3,7 +3,9 @@ module.exports = {
   description: "This is a command that deletes a number of messages in the channel it is used in.",
   aliases: ['clear'],
   execute(message, param){
-    let number = parseInt(param[0]);;
+    if(!message.member.hasPermission("ADMINISTRATOR")) return message.channel.send("Sorry, that command is reserved for administrators. If you are an administrator and wish to use this, please contact tech support");
+
+    let number = parseInt(param[0]);
     if(isNaN(number)){
       return message.reply("I need a number :grin:")
     }else if (number < 2 || number > 100) {

@@ -9,6 +9,17 @@ module.exports = {
     let client = param[4];
     let yesCount = "█";
     let noCount = "█"; 
+    let timer;
+    let msgArgs = args.join(" ");
+    let number = parseInt(args);
+    if(isNaN(number)){
+      timer = 1200000;
+    }else if (number < 5 || number > 120) {
+	    return message.reply('You need to input a number between 2 and 120 minutes.');
+    }else{
+      number = number * 60000;
+    }
+    
 
     let embed = new Discord.MessageEmbed()
     .setColor(0x4286f4)
@@ -23,7 +34,7 @@ module.exports = {
     let name = message.author.username;
     let img = message.author.displayAvatarURL();
 
-    let msgArgs = args.join(" ");
+    
     let voteMsg = new Discord.MessageEmbed()
     .setColor(0x4286f4)
     .setTitle(":chart_with_upwards_trend: Poll")
@@ -38,7 +49,20 @@ module.exports = {
 
     message.channel.send(voteMsg).then(messageReaction => {
       messageReaction.react("👍");
-      messageReaction.react("👎")
+      messageReaction.react("👎");
+      setTimeout(() => {
+        let editor = new Discord.MessageEmbed()
+        .setColor(0x4286f4)
+        .setTitle(":chart_with_upwards_trend: Poll has ended")
+        .setDescription(msgArgs)
+        .addFields(
+          {name: "Yes", value: `${yesCount}`},
+          {name: "No", value: `${noCount}`}
+          )
+        .setThumbnail(img)
+        .setFooter("Bot by Study Bunnies Founders | Poll by " + name);
+        messageReaction.edit(editor);
+        }, number);
     })
 
     message.delete()

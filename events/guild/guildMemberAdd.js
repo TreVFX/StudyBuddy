@@ -8,7 +8,7 @@ const applyText = (canvas, text) => {
 	const ctx = canvas.getContext('2d');
 
 	// Declare a base size of the font
-	let fontSize = 70;
+	let fontSize = 50;
 
 	do {
 		// Assign the font to the context and decrement it so it can be measured again
@@ -21,7 +21,7 @@ const applyText = (canvas, text) => {
 };
 
 
-module.exports = async (Discord, client, member)=>{
+module.exports = async (Discord, client, prefix, member)=>{
   const channel = member.guild.channels.cache.find(ch => ch.name === 'welcome');
 
   if(!channel) return;
@@ -34,52 +34,35 @@ module.exports = async (Discord, client, member)=>{
 
   //This deals with the avatar side
   //Setting the colour of the brush
-  ctx.shadowBlur = 20;
-  ctx.shadowColor = "#ffffff";
-  ctx.fillStyle = "darkred";
-  ctx.strokeRect(0, 0, canvas.width, canvas.height);
-  ctx.fillRect(5, 0, 500, 120);
-  ctx.shadowBlur = 10;
-  ctx.shadowColor = "darkred"
-  ctx.beginPath()
-  ctx.moveTo(120, 0);
-  ctx.lineTo(145, 120);
-  ctx.lineTo(5, 120);
-  ctx.lineTo(5, 0);
-  ctx.closePath();
-  ctx.stroke();
-  ctx.fillStyle = "red";
-  ctx.fill();
 
   //This deals with the info
   ctx.font = "30px Georgia";
   ctx.fillStyle = "#ffffff";
-  ctx.fillText("WELCOME", 250, 30);
   ctx.font = applyText(canvas, member.displayName);
-  ctx.fillStyle = "#ffffff";
-  ctx.fillText(`<<${member.displayName}>>`, 250, 60);
-  ctx.font = "23px Georgia";
-  ctx.fillStyle = "#ffffff";
-  ctx.fillText("Thanks for joining our scholars", 250, 90);
-  ctx.font = "10px sans-serif";
-  ctx.fillStyle = "#ffffff";
-  ctx.fillText("Feel free to look around", 230, 110);
 
+  // Since the image takes time to load, you should await it
+  const pic_cards = ["Cards_Blue_Template.png", "Cards_Red_Template.png"]
+  let picker = pic_cards[Math.floor(Math.random() * pic_cards.length)]
+	const background = await Canvas.loadImage(`./events/guild/images/${picker}`);
+	// This uses the canvas dimensions to stretch the image onto the entire canvas
+	ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
+
+  ctx.fillStyle = "#ffffff";
+  ctx.fillText(`<<${member.displayName}>>`, 220, 105);
   // Pick up the pen
   ctx.beginPath();
   // Start the arc to form a circle
-  ctx.arc(60, 70, 50, 0, Math.PI * 2, true);
+  ctx.arc(80, 62, 45, 0, Math.PI * 2, true);
   // Put the pen down
   ctx.closePath();
   // Clip off the region you drew on
   ctx.clip();
   const avatar = await Canvas.loadImage(member.user.displayAvatarURL({format:'jpg' }));
-  ctx.drawImage(avatar, 5, 15, 105, 105);
-
+  ctx.drawImage(avatar, 25, 10, 105, 105);
 
   const attachment = new Discord.MessageAttachment(canvas.toBuffer());
 
-  //channel.send(attachment);
+  channel.send(attachment);
   channel.send(`Welcome ${member}`)
 
   console.log("Some one joined!");

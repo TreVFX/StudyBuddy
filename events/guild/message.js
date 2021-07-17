@@ -7,7 +7,9 @@ module.exports = (Discord, client, prefix, message)=>{
   const commandName = args.shift().toLowerCase();
 
   if(commandName === "join"){
-    return client.emit("guildMemberAdd", message.member)
+    let joiner = message.mentions.members.first();
+    if(!joiner) return client.emit("guildMemberAdd", message.member);
+    return client.emit("guildMemberAdd", joiner);
   }
 
   let param = [args, Discord, db, fs, client, commandName]

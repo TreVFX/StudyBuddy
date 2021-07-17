@@ -1,5 +1,5 @@
 module.exports = {
-  name: 'command',
+  name: 'rules',
   description: "Gives you an overview of the key rules",
   execute(message, param) {
     

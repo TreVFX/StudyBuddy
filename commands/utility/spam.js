@@ -1,14 +1,14 @@
 module.exports = {
-  name: "ticket",
-  aliases: ['t'],
-  description: "Open a private channel to chat with the administration",
+  name: "spam",
+  aliases: ['s'],
+  description: "Open a private channel to spam as much as you want",
   async execute(message, param) {
     let client = param[4];
     let cat
-    let categoryID = message.guild.channels.cache.find(ch => ch.name == "Tickets" && ch.type === "category");
+    let categoryID = message.guild.channels.cache.find(ch => ch.name == "Spam" && ch.type === "category");
     
     if(!categoryID){
-      message.guild.channels.create('Tickets', {
+      message.guild.channels.create('Spam', {
         type: 'category',
         }).then(cid => {
           cat = cid.id;
@@ -21,7 +21,7 @@ module.exports = {
       cat = categoryID.id;
     }
     
-    const channel = await message.guild.channels.create(`ticket: ${message.author.username}`);
+    const channel = await message.guild.channels.create(`spam: ${message.author.username}`);
     channel.setParent(cat);
 
     channel.updateOverwrite(message.guild.id, {
@@ -33,7 +33,7 @@ module.exports = {
       VIEW_CHANNEL: true,
     });
 
-    const reactionMessage = await channel.send("Feel free to talk to our admins. There nice and willing to help.");
+    const reactionMessage = await channel.send("Post as much nonsense as you please");
 
     try {
       await reactionMessage.react("🔒");

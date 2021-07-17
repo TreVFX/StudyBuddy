@@ -37,11 +37,11 @@ registerFont('./myfonts/Texturina-BlackItalic-opsz=12.ttf', { family: 'Texturina
  client.commands = new Discord.Collection();
  client.events = new Discord.Collection();
 
+//Loads the handlers
 ['command_handler', 'event_handler'].forEach(handler =>{
   require(`./handlers/${handler}`)(client, Discord, prefix);
 })
 
 
-
-client.login(process.env.DISCORD_TOKEN) // Replace XXXXX with your bot token
-console.log("Buddy is online.")
+//Bot token and logging in to the bot
+client.login(process.env.DISCORD_TOKEN);
