@@ -5,7 +5,9 @@ module.exports = {
       let client = param[4];
       let Discord = param[1];
       let fs = param[3];
+      let args = param[0];
       var descriptions = [];
+
 
       const commandFolders = fs.readdirSync(`./commands`);
       for(const cmd of client.commands){
@@ -14,23 +16,26 @@ module.exports = {
         }else{
           continue;
         }
-      }        
+      }
+
+      if(!args.length){
+        let embed = new Discord.MessageEmbed()
+        .setColor("#00A2B3")
+        .setTitle("Commands")
+        .setURL('https://www.google.com')
+        .setDescription("Here are my commands!")
+        .addFields(
+          descriptions
+          )
+          .setImage("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSbITGb20Lq6Dng2T6SZmn6rSRQCJobHgmhig&usqp=CAU")
+          .setFooter('Make sure to check out the rules channel');
+
+        return message.channel.send(embed);
+      }
+      
+      return message.channel.send(client.commands.get(args[0]).description)
+         
         
-
-  
-
-      let embed = new Discord.MessageEmbed()
-      .setColor("#00A2B3")
-      .setTitle("Commands")
-      .setURL('https://www.google.com')
-      .setDescription("Here are my commands!")
-      .addFields(
-        descriptions
-        )
-        .setImage("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSbITGb20Lq6Dng2T6SZmn6rSRQCJobHgmhig&usqp=CAU")
-        .setFooter('Make sure to check out the rules channel');
-
-      message.channel.send(embed);
         
     }
 }

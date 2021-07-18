@@ -17,6 +17,7 @@
     "discord.js-pagination": "^1.0.3",
     "express": "^4.17.1",
     "ffmpeg-static": "^4.2.8",
+    "mongodb": "^4.0.0",
     "opusscript": "0.0.7",
     "weather-js": "^2.0.0",
     "yt-search": "^2.7.4",
