@@ -1,6 +1,7 @@
 module.exports = {
   name: "poll",
   aliases: ["vote"],
+  cooldown: 120,
   description: "Let's you create a simple yes or no vote",
   execute(message, param){
 
